@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+
+import "./App.css";
+import NavBar from "./component/NavBar";
+import AddMovie from "./component/AddMovie";
+import MovieList from "./component/MovieList";
+import Data from "./constant/Data";
 
 function App() {
+  const [movies, setMovie] = useState(Data);
+  const [text, setText] = useState("");
+  const [rate, setRate] = useState(0);
+
+  const handleSave = (newMovie) => {
+    setMovie([...movies, newMovie]);
+  };
+  const searchText = (text) => {
+    setText(text);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="NavB">
+        <NavBar
+          setRate={setRate}
+          handlAddMovie={handleSave}
+          handleGetText={searchText}
+        />
+        <AddMovie handlAddMovie={handleSave} />
+      </div>
+
+      <MovieList rate={rate} movies={movies} text={text} />
     </div>
   );
 }
